@@ -1,0 +1,36 @@
+@import '~@angular/material/theming';
+
+.container {
+  background-color: #87b6bd;
+  width: 100%;
+}
+.monk-card {
+  max-width: 350px;
+    float: left;
+    cursor: pointer;
+    &:hover {
+      @include mat-elevation(8);
+    }
+  }
+  
+  .monk-header-image {
+    padding-top: 10px;
+    background-image: url('../../assets/images/monks/person.svg');
+    background-size: cover;
+  }
+  
+  mat-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-right: 20px;
+  }
+  mat-card-header {
+    width: 100%;
+  }
+
+  mat-card-title {
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+  }

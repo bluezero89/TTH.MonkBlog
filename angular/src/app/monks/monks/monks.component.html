@@ -1,0 +1,804 @@
+<div class="row entry-row">
+  <div class="col-auto">
+    <h1 class="content-header-title">{{ '::Monks' | abpLocalization}}</h1>
+  </div>
+
+  <div class="col-lg-auto pl-lg-0">
+    <abp-breadcrumb></abp-breadcrumb>
+  </div>
+
+  <div class="col">
+    <div class="text-lg-right pt-2">
+      <button
+        *abpPermission="'MonkBlog.Monks.Create'"
+        class="btn btn-primary btn-sm"
+        type="button"
+        (click)="create()"
+      >
+        <i class="fa fa-plus mr-1"></i>
+        {{ '::NewMonk' | abpLocalization }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<p>
+  <a
+    href="javascript:;"
+    (click)="isFiltersHidden = !isFiltersHidden"
+    [attr.aria-expanded]="!isFiltersHidden"
+    aria-controls="advanced-content-filters"
+  >
+    {{ '::SeeAdvancedFilters' | abpLocalization }}
+    <i [ngbCollapse]="!isFiltersHidden" class="fa fa-angle-down ml-1"></i>
+    <i [ngbCollapse]="isFiltersHidden" class="fa fa-angle-up ml-1"></i>
+  </a>
+</p>
+
+<div id="advanced-content-filters" [ngbCollapse]="isFiltersHidden">
+  <div class="card mb-4">
+    <div class="card-body">
+      <form #filterForm (keyup.enter)="list.get()">
+        <div class="row">
+                    <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="imgPathFilter">
+                  {{ '::ImgPath' | abpLocalization }}
+              </label>
+              
+              <input
+                id="imgPathFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.imgPath"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="fullNameFilter">
+                  {{ '::FullName' | abpLocalization }}
+              </label>
+              
+              <input
+                id="fullNameFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.fullName"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="holyNameFilter">
+                  {{ '::HolyName' | abpLocalization }}
+              </label>
+              
+              <input
+                id="holyNameFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.holyName"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="homeTownFilter">
+                  {{ '::HomeTown' | abpLocalization }}
+              </label>
+              
+              <input
+                id="homeTownFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.homeTown"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="permanentAdressFilter">
+                  {{ '::PermanentAdress' | abpLocalization }}
+              </label>
+              
+              <input
+                id="permanentAdressFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.permanentAdress"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfBirth">
+                  {{ '::MinDateOfBirth' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfBirth"
+                class="form-control"
+                #minDateOfBirthDatepicker="ngbDatepicker"
+                name="minDateOfBirth"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfBirthDatepicker.toggle()"
+                (keyup.space)="minDateOfBirthDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfBirthMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfBirth">
+                {{ '::MaxDateOfBirth' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfBirth"
+                class="form-control"
+                #maxDateOfBirthDatepicker="ngbDatepicker"
+                name="maxDateOfBirth"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfBirthDatepicker.toggle()"
+                (keyup.space)="maxDateOfBirthDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfBirthMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfBaptism">
+                  {{ '::MinDateOfBaptism' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfBaptism"
+                class="form-control"
+                #minDateOfBaptismDatepicker="ngbDatepicker"
+                name="minDateOfBaptism"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfBaptismDatepicker.toggle()"
+                (keyup.space)="minDateOfBaptismDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfBaptismMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfBaptism">
+                {{ '::MaxDateOfBaptism' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfBaptism"
+                class="form-control"
+                #maxDateOfBaptismDatepicker="ngbDatepicker"
+                name="maxDateOfBaptism"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfBaptismDatepicker.toggle()"
+                (keyup.space)="maxDateOfBaptismDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfBaptismMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="placeOfBaptismFilter">
+                  {{ '::PlaceOfBaptism' | abpLocalization }}
+              </label>
+              
+              <input
+                id="placeOfBaptismFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.placeOfBaptism"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfConfirmation">
+                  {{ '::MinDateOfConfirmation' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfConfirmation"
+                class="form-control"
+                #minDateOfConfirmationDatepicker="ngbDatepicker"
+                name="minDateOfConfirmation"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfConfirmationDatepicker.toggle()"
+                (keyup.space)="minDateOfConfirmationDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfConfirmationMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfConfirmation">
+                {{ '::MaxDateOfConfirmation' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfConfirmation"
+                class="form-control"
+                #maxDateOfConfirmationDatepicker="ngbDatepicker"
+                name="maxDateOfConfirmation"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfConfirmationDatepicker.toggle()"
+                (keyup.space)="maxDateOfConfirmationDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfConfirmationMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="placeOfConfirmationFilter">
+                  {{ '::PlaceOfConfirmation' | abpLocalization }}
+              </label>
+              
+              <input
+                id="placeOfConfirmationFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.placeOfConfirmation"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="emailFilter">
+                  {{ '::Email' | abpLocalization }}
+              </label>
+              
+              <input
+                id="emailFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.email"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="phoneNumberFilter">
+                  {{ '::PhoneNumber' | abpLocalization }}
+              </label>
+              
+              <input
+                id="phoneNumberFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.phoneNumber"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="father_FullNameFilter">
+                  {{ '::Father_FullName' | abpLocalization }}
+              </label>
+              
+              <input
+                id="father_FullNameFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.father_FullName"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="father_HolyNameFilter">
+                  {{ '::Father_HolyName' | abpLocalization }}
+              </label>
+              
+              <input
+                id="father_HolyNameFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.father_HolyName"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="mother_FullNameFilter">
+                  {{ '::Mother_FullName' | abpLocalization }}
+              </label>
+              
+              <input
+                id="mother_FullNameFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.mother_FullName"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="mother_HolyNameFilter">
+                  {{ '::Mother_HolyName' | abpLocalization }}
+              </label>
+              
+              <input
+                id="mother_HolyNameFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.mother_HolyName"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="col-12 col-sm-auto align-self-end mb-3">
+          <div class="row">
+            <div class="col-6 col-sm-auto">
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-block"
+                (click)="filters = {}"
+              >
+                <span>{{ 'AbpUi::Clear' | abpLocalization }}</span>
+              </button>
+            </div>
+            <div class="col-6 col-sm-auto">
+              <button type="button" class="btn btn-primary btn-block" (click)="list.get()">
+                <span>{{ 'AbpUi::Refresh' | abpLocalization }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="data-tables-filter">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control"
+          [placeholder]="'AbpUi::PagerSearch' | abpLocalization"
+          [(ngModel)]="list.filter"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-primary" (click)="list.get()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <ngx-datatable-column
+        [name]="'AbpUi::Actions' | abpLocalization"
+        [maxWidth]="150"
+        [width]="150"
+        [sortable]="false"
+      >
+        <ng-template let-row="row" let-i="rowIndex" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button
+              class="btn btn-primary btn-sm dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              ngbDropdownToggle
+            >
+              <i class="fa fa-cog mr-1"></i>
+              {{ 'AbpUi::Actions' | abpLocalization }}
+            </button>
+
+            <div ngbDropdownMenu>
+              <button
+                ngbDropdownItem
+                *abpPermission="'MonkBlog.Monks.Edit'"
+                (click)="update(row)"
+              >
+                {{ 'AbpUi::Edit' | abpLocalization }}
+              </button>
+
+              <button
+                ngbDropdownItem
+                *abpPermission="'MonkBlog.Monks.Delete'"
+                (click)="delete(row)"
+              >
+                {{ 'AbpUi::Delete' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ '::ImgPath' | abpLocalization }}" prop="imgPath">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.imgPath }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::FullName' | abpLocalization }}" prop="fullName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.fullName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::HolyName' | abpLocalization }}" prop="holyName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.holyName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::HomeTown' | abpLocalization }}" prop="homeTown">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.homeTown }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::PermanentAdress' | abpLocalization }}" prop="permanentAdress">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.permanentAdress }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfBirth' | abpLocalization }}" prop="dateOfBirth">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfBirth | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfBaptism' | abpLocalization }}" prop="dateOfBaptism">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfBaptism | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::PlaceOfBaptism' | abpLocalization }}" prop="placeOfBaptism">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.placeOfBaptism }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfConfirmation' | abpLocalization }}" prop="dateOfConfirmation">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfConfirmation | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::PlaceOfConfirmation' | abpLocalization }}" prop="placeOfConfirmation">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.placeOfConfirmation }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::Email' | abpLocalization }}" prop="email">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.email }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::PhoneNumber' | abpLocalization }}" prop="phoneNumber">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.phoneNumber }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::Father_FullName' | abpLocalization }}" prop="father_FullName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.father_FullName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::Father_HolyName' | abpLocalization }}" prop="father_HolyName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.father_HolyName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::Mother_FullName' | abpLocalization }}" prop="mother_FullName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.mother_FullName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::Mother_HolyName' | abpLocalization }}" prop="mother_HolyName">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.mother_HolyName }}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+    </ngx-datatable>
+  </div>
+</div>
+
+<abp-modal [busy]="isModalBusy" [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <h3>{{ (selected?.id ? 'AbpUi::Edit' : '::NewMonk') | abpLocalization }}</h3>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="submitForm()" validateOnSubmit>
+      <div class="mt-2 fade-in-top">
+        <div class="form-group">
+          <label for="monk-imgPath">
+            {{ '::ImgPath' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-imgPath" 
+            formControlName="imgPath"
+            class="form-control"
+            
+            
+            autofocus
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-fullName">
+            {{ '::FullName' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-fullName" 
+            formControlName="fullName"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-holyName">
+            {{ '::HolyName' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-holyName" 
+            formControlName="holyName"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-homeTown">
+            {{ '::HomeTown' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-homeTown" 
+            formControlName="homeTown"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-permanentAdress">
+            {{ '::PermanentAdress' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-permanentAdress" 
+            formControlName="permanentAdress"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-dateOfBirth">
+            {{ '::DateOfBirth' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="monk-dateOfBirth"
+            formControlName="dateOfBirth"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfBirthDatepicker="ngbDatepicker"
+            (click)="DateOfBirthDatepicker.open()"
+            (keyup.space)="DateOfBirthDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="monk-dateOfBaptism">
+            {{ '::DateOfBaptism' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="monk-dateOfBaptism"
+            formControlName="dateOfBaptism"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfBaptismDatepicker="ngbDatepicker"
+            (click)="DateOfBaptismDatepicker.open()"
+            (keyup.space)="DateOfBaptismDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="monk-placeOfBaptism">
+            {{ '::PlaceOfBaptism' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-placeOfBaptism" 
+            formControlName="placeOfBaptism"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-dateOfConfirmation">
+            {{ '::DateOfConfirmation' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="monk-dateOfConfirmation"
+            formControlName="dateOfConfirmation"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfConfirmationDatepicker="ngbDatepicker"
+            (click)="DateOfConfirmationDatepicker.open()"
+            (keyup.space)="DateOfConfirmationDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="monk-placeOfConfirmation">
+            {{ '::PlaceOfConfirmation' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-placeOfConfirmation" 
+            formControlName="placeOfConfirmation"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-email">
+            {{ '::Email' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-email" 
+            formControlName="email"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-phoneNumber">
+            {{ '::PhoneNumber' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-phoneNumber" 
+            formControlName="phoneNumber"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-father_FullName">
+            {{ '::Father_FullName' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-father_FullName" 
+            formControlName="father_FullName"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-father_HolyName">
+            {{ '::Father_HolyName' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-father_HolyName" 
+            formControlName="father_HolyName"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-mother_FullName">
+            {{ '::Mother_FullName' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-mother_FullName" 
+            formControlName="mother_FullName"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="monk-mother_HolyName">
+            {{ '::Mother_HolyName' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="monk-mother_HolyName" 
+            formControlName="mother_HolyName"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+
+
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" #abpClose>
+      {{ 'AbpUi::Cancel' | abpLocalization }}
+    </button>
+    
+    <abp-button
+      iconClass="fa fa-check"
+      (click)="submitForm()"
+      [disabled]="form?.invalid"
+    >
+      {{ 'AbpUi::Save' | abpLocalization }}
+    </abp-button>
+  </ng-template>
+</abp-modal>

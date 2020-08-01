@@ -1,0 +1,67 @@
+<div class="row entry-row">
+  <div class="col-auto">
+    <h1 class="content-header-title">{{ '::Menu:Home' | abpLocalization }}</h1>
+  </div>
+  <div class="col-lg-auto pl-lg-0">
+    <abp-breadcrumb></abp-breadcrumb>
+  </div>
+  <div class="col">
+    <div class="text-lg-right pt-2" id="AbpContentToolbar"></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">{{ '::MonkTitle' | abpLocalization }}</div>
+  <div class="card-body">
+    <p *ngIf="!hasLoggedIn">
+      <a
+        routerLink="/account/login"
+        [state]="{ redirectUrl: '/' }"
+        class="btn btn-primary"
+        role="button"
+        ><i class="fa fa-sign-in mr-1"></i>{{ 'AbpAccount::Login' | abpLocalization }}</a
+      >
+    </p>
+    <div class="col col-md-3 data-tables-filter">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control"
+          [placeholder]="'AbpUi::PagerSearch' | abpLocalization"
+          [(ngModel)]="list.filter"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-primary" (click)="list.get()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div Fxlaout="row" class="col col-md-12"  *ngFor="let monk of monks">
+      <div fxFlex="30">
+        <mat-card class="monk-card" (click)="onCardClick(monk.id)">
+          <mat-card-header>
+            <div mat-card-avatar class="monk-header-image"></div>
+            <mat-card-title>{{ monk.fullName }}</mat-card-title>
+            <mat-card-subtitle>{{ monk.holyName }}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src={{monk.imgPath}} alt="Photo of person">
+
+          <mat-card-content>
+            <p>
+              <label>{{ '::DateOfBirth' | abpLocalization}} : {{ monk.dateOfBirth | date }}</label>
+            </p>
+            <p>
+              <label>{{ '::HomeTown' | abpLocalization}} <br> {{ monk.homeTown}}</label>
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>{{ '::Detail' | abpLocalization}}</button>
+          </mat-card-actions>
+        </mat-card>
+      
+    </div>
+    </div>
+     
+  </div>
+</div>

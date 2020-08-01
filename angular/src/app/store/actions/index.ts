@@ -1,0 +1,1 @@
+export* from './monks/monks.action';export* from './religousLives/religousLives.action';export* from './studyHistories/studyHistories.action';export* from './pastorals/pastorals.action';

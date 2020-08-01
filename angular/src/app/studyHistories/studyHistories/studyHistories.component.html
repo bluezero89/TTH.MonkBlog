@@ -1,0 +1,426 @@
+<div class="row entry-row">
+  <div class="col-auto">
+    <h1 class="content-header-title">{{ '::StudyHistories' | abpLocalization}}</h1>
+  </div>
+
+  <div class="col-lg-auto pl-lg-0">
+    <abp-breadcrumb></abp-breadcrumb>
+  </div>
+
+  <div class="col">
+    <div class="text-lg-right pt-2">
+      <button
+        *abpPermission="'MonkBlog.StudyHistories.Create'"
+        class="btn btn-primary btn-sm"
+        type="button"
+        (click)="create()"
+      >
+        <i class="fa fa-plus mr-1"></i>
+        {{ '::NewStudyHistory' | abpLocalization }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<p>
+  <a
+    href="javascript:;"
+    (click)="isFiltersHidden = !isFiltersHidden"
+    [attr.aria-expanded]="!isFiltersHidden"
+    aria-controls="advanced-content-filters"
+  >
+    {{ '::SeeAdvancedFilters' | abpLocalization }}
+    <i [ngbCollapse]="!isFiltersHidden" class="fa fa-angle-down ml-1"></i>
+    <i [ngbCollapse]="isFiltersHidden" class="fa fa-angle-up ml-1"></i>
+  </a>
+</p>
+
+<div id="advanced-content-filters" [ngbCollapse]="isFiltersHidden">
+  <div class="card mb-4">
+    <div class="card-body">
+      <form #filterForm (keyup.enter)="list.get()">
+        <div class="row">
+                    <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="diplomaFilter">
+                  {{ '::Diploma' | abpLocalization }}
+              </label>
+              
+              <input
+                id="diplomaFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.diploma"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="academicLevelFilter">
+                  {{ '::AcademicLevel' | abpLocalization }}
+              </label>
+              
+              <input
+                id="academicLevelFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.academicLevel"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="studyAtFilter">
+                  {{ '::StudyAt' | abpLocalization }}
+              </label>
+              
+              <input
+                id="studyAtFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.studyAt"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minFromDate">
+                  {{ '::MinFromDate' | abpLocalization }}
+              </label>
+
+              <input
+                id="minFromDate"
+                class="form-control"
+                #minFromDateDatepicker="ngbDatepicker"
+                name="minFromDate"
+                ngbDatepicker
+                readonly
+                (click)="minFromDateDatepicker.toggle()"
+                (keyup.space)="minFromDateDatepicker.toggle()"
+                [(ngModel)]="filters.fromDateMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxFromDate">
+                {{ '::MaxFromDate' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxFromDate"
+                class="form-control"
+                #maxFromDateDatepicker="ngbDatepicker"
+                name="maxFromDate"
+                ngbDatepicker
+                readonly
+                (click)="maxFromDateDatepicker.toggle()"
+                (keyup.space)="maxFromDateDatepicker.toggle()"
+                [(ngModel)]="filters.fromDateMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minToDate">
+                  {{ '::MinToDate' | abpLocalization }}
+              </label>
+
+              <input
+                id="minToDate"
+                class="form-control"
+                #minToDateDatepicker="ngbDatepicker"
+                name="minToDate"
+                ngbDatepicker
+                readonly
+                (click)="minToDateDatepicker.toggle()"
+                (keyup.space)="minToDateDatepicker.toggle()"
+                [(ngModel)]="filters.toDateMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxToDate">
+                {{ '::MaxToDate' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxToDate"
+                class="form-control"
+                #maxToDateDatepicker="ngbDatepicker"
+                name="maxToDate"
+                ngbDatepicker
+                readonly
+                (click)="maxToDateDatepicker.toggle()"
+                (keyup.space)="maxToDateDatepicker.toggle()"
+                [(ngModel)]="filters.toDateMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="achievementsFilter">
+                  {{ '::Achievements' | abpLocalization }}
+              </label>
+              
+              <input
+                id="achievementsFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.achievements"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="col-12 col-sm-auto align-self-end mb-3">
+          <div class="row">
+            <div class="col-6 col-sm-auto">
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-block"
+                (click)="filters = {}"
+              >
+                <span>{{ 'AbpUi::Clear' | abpLocalization }}</span>
+              </button>
+            </div>
+            <div class="col-6 col-sm-auto">
+              <button type="button" class="btn btn-primary btn-block" (click)="list.get()">
+                <span>{{ 'AbpUi::Refresh' | abpLocalization }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="data-tables-filter">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control"
+          [placeholder]="'AbpUi::PagerSearch' | abpLocalization"
+          [(ngModel)]="list.filter"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-primary" (click)="list.get()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <ngx-datatable-column
+        [name]="'AbpUi::Actions' | abpLocalization"
+        [maxWidth]="150"
+        [width]="150"
+        [sortable]="false"
+      >
+        <ng-template let-row="row" let-i="rowIndex" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button
+              class="btn btn-primary btn-sm dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              ngbDropdownToggle
+            >
+              <i class="fa fa-cog mr-1"></i>
+              {{ 'AbpUi::Actions' | abpLocalization }}
+            </button>
+
+            <div ngbDropdownMenu>
+              <button
+                ngbDropdownItem
+                *abpPermission="'MonkBlog.StudyHistories.Edit'"
+                (click)="update(row)"
+              >
+                {{ 'AbpUi::Edit' | abpLocalization }}
+              </button>
+
+              <button
+                ngbDropdownItem
+                *abpPermission="'MonkBlog.StudyHistories.Delete'"
+                (click)="delete(row)"
+              >
+                {{ 'AbpUi::Delete' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ '::Diploma' | abpLocalization }}" prop="diploma">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.diploma }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::AcademicLevel' | abpLocalization }}" prop="academicLevel">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.academicLevel }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::StudyAt' | abpLocalization }}" prop="studyAt">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.studyAt }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::FromDate' | abpLocalization }}" prop="fromDate">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.fromDate | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::ToDate' | abpLocalization }}" prop="toDate">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.toDate | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::Achievements' | abpLocalization }}" prop="achievements">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.achievements }}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+    </ngx-datatable>
+  </div>
+</div>
+
+<abp-modal [busy]="isModalBusy" [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <h3>{{ (selected?.id ? 'AbpUi::Edit' : '::NewStudyHistory') | abpLocalization }}</h3>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="submitForm()" validateOnSubmit>
+      <div class="mt-2 fade-in-top">
+        <div class="form-group">
+          <label for="studyHistory-diploma">
+            {{ '::Diploma' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="studyHistory-diploma" 
+            formControlName="diploma"
+            class="form-control"
+            
+            
+            autofocus
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="studyHistory-academicLevel">
+            {{ '::AcademicLevel' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="studyHistory-academicLevel" 
+            formControlName="academicLevel"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="studyHistory-studyAt">
+            {{ '::StudyAt' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="studyHistory-studyAt" 
+            formControlName="studyAt"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="studyHistory-fromDate">
+            {{ '::FromDate' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="studyHistory-fromDate"
+            formControlName="fromDate"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #FromDateDatepicker="ngbDatepicker"
+            (click)="FromDateDatepicker.open()"
+            (keyup.space)="FromDateDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="studyHistory-toDate">
+            {{ '::ToDate' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="studyHistory-toDate"
+            formControlName="toDate"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #ToDateDatepicker="ngbDatepicker"
+            (click)="ToDateDatepicker.open()"
+            (keyup.space)="ToDateDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="studyHistory-achievements">
+            {{ '::Achievements' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="studyHistory-achievements" 
+            formControlName="achievements"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+
+
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" #abpClose>
+      {{ 'AbpUi::Cancel' | abpLocalization }}
+    </button>
+    
+    <abp-button
+      iconClass="fa fa-check"
+      (click)="submitForm()"
+      [disabled]="form?.invalid"
+    >
+      {{ 'AbpUi::Save' | abpLocalization }}
+    </abp-button>
+  </ng-template>
+</abp-modal>

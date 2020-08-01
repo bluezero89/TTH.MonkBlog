@@ -1,0 +1,769 @@
+<div class="row entry-row">
+  <div class="col-auto">
+    <h1 class="content-header-title">{{ '::ReligousLives' | abpLocalization}}</h1>
+  </div>
+
+  <div class="col-lg-auto pl-lg-0">
+    <abp-breadcrumb></abp-breadcrumb>
+  </div>
+
+  <div class="col">
+    <div class="text-lg-right pt-2">
+      <button
+        *abpPermission="'MonkBlog.ReligousLives.Create'"
+        class="btn btn-primary btn-sm"
+        type="button"
+        (click)="create()"
+      >
+        <i class="fa fa-plus mr-1"></i>
+        {{ '::NewReligousLife' | abpLocalization }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<p>
+  <a
+    href="javascript:;"
+    (click)="isFiltersHidden = !isFiltersHidden"
+    [attr.aria-expanded]="!isFiltersHidden"
+    aria-controls="advanced-content-filters"
+  >
+    {{ '::SeeAdvancedFilters' | abpLocalization }}
+    <i [ngbCollapse]="!isFiltersHidden" class="fa fa-angle-down ml-1"></i>
+    <i [ngbCollapse]="isFiltersHidden" class="fa fa-angle-up ml-1"></i>
+  </a>
+</p>
+
+<div id="advanced-content-filters" [ngbCollapse]="isFiltersHidden">
+  <div class="card mb-4">
+    <div class="card-body">
+      <form #filterForm (keyup.enter)="list.get()">
+        <div class="row">
+                    <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="monkIdFilter">
+                  {{ '::MonkId' | abpLocalization }}
+              </label>
+              
+              <input
+                id="monkIdFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.monkId"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfPractitioners">
+                  {{ '::MinDateOfPractitioners' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfPractitioners"
+                class="form-control"
+                #minDateOfPractitionersDatepicker="ngbDatepicker"
+                name="minDateOfPractitioners"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfPractitionersDatepicker.toggle()"
+                (keyup.space)="minDateOfPractitionersDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfPractitionersMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfPractitioners">
+                {{ '::MaxDateOfPractitioners' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfPractitioners"
+                class="form-control"
+                #maxDateOfPractitionersDatepicker="ngbDatepicker"
+                name="maxDateOfPractitioners"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfPractitionersDatepicker.toggle()"
+                (keyup.space)="maxDateOfPractitionersDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfPractitionersMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfThinhVien">
+                  {{ '::MinDateOfThinhVien' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfThinhVien"
+                class="form-control"
+                #minDateOfThinhVienDatepicker="ngbDatepicker"
+                name="minDateOfThinhVien"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfThinhVienDatepicker.toggle()"
+                (keyup.space)="minDateOfThinhVienDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfThinhVienMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfThinhVien">
+                {{ '::MaxDateOfThinhVien' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfThinhVien"
+                class="form-control"
+                #maxDateOfThinhVienDatepicker="ngbDatepicker"
+                name="maxDateOfThinhVien"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfThinhVienDatepicker.toggle()"
+                (keyup.space)="maxDateOfThinhVienDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfThinhVienMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="dateOfTapVienFilter">
+                  {{ '::DateOfTapVien' | abpLocalization }}
+              </label>
+              
+              <input
+                id="dateOfTapVienFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.dateOfTapVien"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="firstKhanFilter">
+                  {{ '::FirstKhan' | abpLocalization }}
+              </label>
+              
+              <input
+                id="firstKhanFilter"
+                type="text"
+                class="form-control"
+                [(ngModel)]="filters.firstKhan"
+                [ngModelOptions]="{ standalone: true }"/>
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minSecondKhan">
+                  {{ '::MinSecondKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="minSecondKhan"
+                class="form-control"
+                #minSecondKhanDatepicker="ngbDatepicker"
+                name="minSecondKhan"
+                ngbDatepicker
+                readonly
+                (click)="minSecondKhanDatepicker.toggle()"
+                (keyup.space)="minSecondKhanDatepicker.toggle()"
+                [(ngModel)]="filters.secondKhanMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxSecondKhan">
+                {{ '::MaxSecondKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxSecondKhan"
+                class="form-control"
+                #maxSecondKhanDatepicker="ngbDatepicker"
+                name="maxSecondKhan"
+                ngbDatepicker
+                readonly
+                (click)="maxSecondKhanDatepicker.toggle()"
+                (keyup.space)="maxSecondKhanDatepicker.toggle()"
+                [(ngModel)]="filters.secondKhanMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minThirdKhan">
+                  {{ '::MinThirdKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="minThirdKhan"
+                class="form-control"
+                #minThirdKhanDatepicker="ngbDatepicker"
+                name="minThirdKhan"
+                ngbDatepicker
+                readonly
+                (click)="minThirdKhanDatepicker.toggle()"
+                (keyup.space)="minThirdKhanDatepicker.toggle()"
+                [(ngModel)]="filters.thirdKhanMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxThirdKhan">
+                {{ '::MaxThirdKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxThirdKhan"
+                class="form-control"
+                #maxThirdKhanDatepicker="ngbDatepicker"
+                name="maxThirdKhan"
+                ngbDatepicker
+                readonly
+                (click)="maxThirdKhanDatepicker.toggle()"
+                (keyup.space)="maxThirdKhanDatepicker.toggle()"
+                [(ngModel)]="filters.thirdKhanMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minRemainKhan">
+                  {{ '::MinRemainKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="minRemainKhan"
+                class="form-control"
+                #minRemainKhanDatepicker="ngbDatepicker"
+                name="minRemainKhan"
+                ngbDatepicker
+                readonly
+                (click)="minRemainKhanDatepicker.toggle()"
+                (keyup.space)="minRemainKhanDatepicker.toggle()"
+                [(ngModel)]="filters.remainKhanMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxRemainKhan">
+                {{ '::MaxRemainKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxRemainKhan"
+                class="form-control"
+                #maxRemainKhanDatepicker="ngbDatepicker"
+                name="maxRemainKhan"
+                ngbDatepicker
+                readonly
+                (click)="maxRemainKhanDatepicker.toggle()"
+                (keyup.space)="maxRemainKhanDatepicker.toggle()"
+                [(ngModel)]="filters.remainKhanMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minLifeTimeKhan">
+                  {{ '::MinLifeTimeKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="minLifeTimeKhan"
+                class="form-control"
+                #minLifeTimeKhanDatepicker="ngbDatepicker"
+                name="minLifeTimeKhan"
+                ngbDatepicker
+                readonly
+                (click)="minLifeTimeKhanDatepicker.toggle()"
+                (keyup.space)="minLifeTimeKhanDatepicker.toggle()"
+                [(ngModel)]="filters.lifeTimeKhanMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxLifeTimeKhan">
+                {{ '::MaxLifeTimeKhan' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxLifeTimeKhan"
+                class="form-control"
+                #maxLifeTimeKhanDatepicker="ngbDatepicker"
+                name="maxLifeTimeKhan"
+                ngbDatepicker
+                readonly
+                (click)="maxLifeTimeKhanDatepicker.toggle()"
+                (keyup.space)="maxLifeTimeKhanDatepicker.toggle()"
+                [(ngModel)]="filters.lifeTimeKhanMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfDeacon">
+                  {{ '::MinDateOfDeacon' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfDeacon"
+                class="form-control"
+                #minDateOfDeaconDatepicker="ngbDatepicker"
+                name="minDateOfDeacon"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfDeaconDatepicker.toggle()"
+                (keyup.space)="minDateOfDeaconDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfDeaconMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfDeacon">
+                {{ '::MaxDateOfDeacon' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfDeacon"
+                class="form-control"
+                #maxDateOfDeaconDatepicker="ngbDatepicker"
+                name="maxDateOfDeacon"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfDeaconDatepicker.toggle()"
+                (keyup.space)="maxDateOfDeaconDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfDeaconMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="minDateOfPriest">
+                  {{ '::MinDateOfPriest' | abpLocalization }}
+              </label>
+
+              <input
+                id="minDateOfPriest"
+                class="form-control"
+                #minDateOfPriestDatepicker="ngbDatepicker"
+                name="minDateOfPriest"
+                ngbDatepicker
+                readonly
+                (click)="minDateOfPriestDatepicker.toggle()"
+                (keyup.space)="minDateOfPriestDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfPriestMin"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-sm-auto">
+            <div class="form-group">
+              <label for="maxDateOfPriest">
+                {{ '::MaxDateOfPriest' | abpLocalization }}
+              </label>
+
+              <input
+                id="maxDateOfPriest"
+                class="form-control"
+                #maxDateOfPriestDatepicker="ngbDatepicker"
+                name="maxDateOfPriest"
+                ngbDatepicker
+                readonly
+                (click)="maxDateOfPriestDatepicker.toggle()"
+                (keyup.space)="maxDateOfPriestDatepicker.toggle()"
+                [(ngModel)]="filters.dateOfPriestMax"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="col-12 col-sm-auto align-self-end mb-3">
+          <div class="row">
+            <div class="col-6 col-sm-auto">
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-block"
+                (click)="filters = {}"
+              >
+                <span>{{ 'AbpUi::Clear' | abpLocalization }}</span>
+              </button>
+            </div>
+            <div class="col-6 col-sm-auto">
+              <button type="button" class="btn btn-primary btn-block" (click)="list.get()">
+                <span>{{ 'AbpUi::Refresh' | abpLocalization }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="data-tables-filter">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control"
+          [placeholder]="'AbpUi::PagerSearch' | abpLocalization"
+          [(ngModel)]="list.filter"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-primary" (click)="list.get()">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <ngx-datatable-column
+        [name]="'AbpUi::Actions' | abpLocalization"
+        [maxWidth]="150"
+        [width]="150"
+        [sortable]="false"
+      >
+        <ng-template let-row="row" let-i="rowIndex" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button
+              class="btn btn-primary btn-sm dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              ngbDropdownToggle
+            >
+              <i class="fa fa-cog mr-1"></i>
+              {{ 'AbpUi::Actions' | abpLocalization }}
+            </button>
+
+            <div ngbDropdownMenu>
+              <button
+                ngbDropdownItem
+                *abpPermission="'MonkBlog.ReligousLives.Edit'"
+                (click)="update(row)"
+              >
+                {{ 'AbpUi::Edit' | abpLocalization }}
+              </button>
+
+              <button
+                ngbDropdownItem
+                *abpPermission="'MonkBlog.ReligousLives.Delete'"
+                (click)="delete(row)"
+              >
+                {{ 'AbpUi::Delete' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="{{ '::MonkId' | abpLocalization }}" prop="monkId">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.monkId }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfPractitioners' | abpLocalization }}" prop="dateOfPractitioners">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfPractitioners | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfThinhVien' | abpLocalization }}" prop="dateOfThinhVien">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfThinhVien | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfTapVien' | abpLocalization }}" prop="dateOfTapVien">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfTapVien }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::FirstKhan' | abpLocalization }}" prop="firstKhan">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.firstKhan }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::SecondKhan' | abpLocalization }}" prop="secondKhan">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.secondKhan | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::ThirdKhan' | abpLocalization }}" prop="thirdKhan">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.thirdKhan | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::RemainKhan' | abpLocalization }}" prop="remainKhan">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.remainKhan | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::LifeTimeKhan' | abpLocalization }}" prop="lifeTimeKhan">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.lifeTimeKhan | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfDeacon' | abpLocalization }}" prop="dateOfDeacon">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfDeacon | date }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ '::DateOfPriest' | abpLocalization }}" prop="dateOfPriest">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.dateOfPriest | date }}
+        </ng-template>
+      </ngx-datatable-column>
+
+
+    </ngx-datatable>
+  </div>
+</div>
+
+<abp-modal [busy]="isModalBusy" [(visible)]="isModalOpen">
+  <ng-template #abpHeader>
+    <h3>{{ (selected?.id ? 'AbpUi::Edit' : '::NewReligousLife') | abpLocalization }}</h3>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <form [formGroup]="form" (ngSubmit)="submitForm()" validateOnSubmit>
+      <div class="mt-2 fade-in-top">
+        <div class="form-group">
+          <label for="religousLife-monkId">
+            {{ '::MonkId' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="religousLife-monkId" 
+            formControlName="monkId"
+            class="form-control"
+            
+            
+            autofocus
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="religousLife-dateOfPractitioners">
+            {{ '::DateOfPractitioners' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-dateOfPractitioners"
+            formControlName="dateOfPractitioners"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfPractitionersDatepicker="ngbDatepicker"
+            (click)="DateOfPractitionersDatepicker.open()"
+            (keyup.space)="DateOfPractitionersDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-dateOfThinhVien">
+            {{ '::DateOfThinhVien' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-dateOfThinhVien"
+            formControlName="dateOfThinhVien"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfThinhVienDatepicker="ngbDatepicker"
+            (click)="DateOfThinhVienDatepicker.open()"
+            (keyup.space)="DateOfThinhVienDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-dateOfTapVien">
+            {{ '::DateOfTapVien' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="religousLife-dateOfTapVien" 
+            formControlName="dateOfTapVien"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="religousLife-firstKhan">
+            {{ '::FirstKhan' | abpLocalization }}
+          </label>
+
+          <input
+            type="text" 
+            id="religousLife-firstKhan" 
+            formControlName="firstKhan"
+            class="form-control"
+            
+            
+            
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="religousLife-secondKhan">
+            {{ '::SecondKhan' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-secondKhan"
+            formControlName="secondKhan"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #SecondKhanDatepicker="ngbDatepicker"
+            (click)="SecondKhanDatepicker.open()"
+            (keyup.space)="SecondKhanDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-thirdKhan">
+            {{ '::ThirdKhan' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-thirdKhan"
+            formControlName="thirdKhan"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #ThirdKhanDatepicker="ngbDatepicker"
+            (click)="ThirdKhanDatepicker.open()"
+            (keyup.space)="ThirdKhanDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-remainKhan">
+            {{ '::RemainKhan' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-remainKhan"
+            formControlName="remainKhan"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #RemainKhanDatepicker="ngbDatepicker"
+            (click)="RemainKhanDatepicker.open()"
+            (keyup.space)="RemainKhanDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-lifeTimeKhan">
+            {{ '::LifeTimeKhan' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-lifeTimeKhan"
+            formControlName="lifeTimeKhan"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #LifeTimeKhanDatepicker="ngbDatepicker"
+            (click)="LifeTimeKhanDatepicker.open()"
+            (keyup.space)="LifeTimeKhanDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-dateOfDeacon">
+            {{ '::DateOfDeacon' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-dateOfDeacon"
+            formControlName="dateOfDeacon"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfDeaconDatepicker="ngbDatepicker"
+            (click)="DateOfDeaconDatepicker.open()"
+            (keyup.space)="DateOfDeaconDatepicker.open()"
+          />
+    </div>
+
+        <div class="form-group">
+          <label for="religousLife-dateOfPriest">
+            {{ '::DateOfPriest' | abpLocalization }}
+          </label>
+
+          <input
+            type="text"
+            id="religousLife-dateOfPriest"
+            formControlName="dateOfPriest"
+            class="form-control"
+            ngbDatepicker
+            readonly
+            #DateOfPriestDatepicker="ngbDatepicker"
+            (click)="DateOfPriestDatepicker.open()"
+            (keyup.space)="DateOfPriestDatepicker.open()"
+          />
+    </div>
+
+
+
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" #abpClose>
+      {{ 'AbpUi::Cancel' | abpLocalization }}
+    </button>
+    
+    <abp-button
+      iconClass="fa fa-check"
+      (click)="submitForm()"
+      [disabled]="form?.invalid"
+    >
+      {{ 'AbpUi::Save' | abpLocalization }}
+    </abp-button>
+  </ng-template>
+</abp-modal>
